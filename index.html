@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Engineer 14-Week Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout: one dark column. A metro line of 12 stations up top, swipe decks for weeks and projects, quiet lists for the rest. The three month colours are the only loud thing on the page. */
+  color-scheme: dark;
+  --bg:#0c1416;
+  --surface:#132024;
+  --surface-2:#1a2b30;
+  --line:#26393f;
+  --text:#ebf3f0;
+  --muted:#8fa59e;
+  --m1:#ffb547;
+  --m2:#ff6f91;
+  --m3:#3fd0c0;
+  --m4:#8ea2ff;
+  --font-display:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --card-w:min(86vw,400px);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.55;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+
+/* ambient colour */
+.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.ambient i{position:absolute;width:60vmax;height:60vmax;border-radius:50%;filter:blur(90px);opacity:.14;animation:drift 26s ease-in-out infinite alternate}
+.ambient i:nth-child(1){background:var(--m1);top:-28vmax;left:-22vmax}
+.ambient i:nth-child(2){background:var(--m3);bottom:-32vmax;right:-26vmax;animation-delay:-9s}
+.ambient i:nth-child(3){background:var(--m2);top:38%;left:48%;width:34vmax;height:34vmax;opacity:.07;animation-duration:34s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+header,nav,main,footer{position:relative;z-index:1}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+
+/* hero */
+.hero{padding-block:34px 10px}
+.job{display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 5px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.job b{background:var(--text);color:var(--bg);border-radius:999px;padding:2px 10px;font-weight:700;font-variant-numeric:tabular-nums}
+h1{font-family:var(--font-display);font-weight:800;font-size:clamp(42px,9.5vw,92px);line-height:.94;letter-spacing:-.035em;margin:22px 0 16px}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+h1 .ln span{display:inline-block;animation:rise .9s cubic-bezier(.2,.7,.1,1) both}
+h1 .ln:nth-child(2) span{animation-delay:.12s}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--m1),var(--m2) 50%,var(--m3));-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.lead{color:var(--muted);max-width:58ch;margin:0;font-size:17px}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.stat{display:flex;align-items:baseline;gap:8px;padding:10px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.stat strong{font-family:var(--font-display);font-size:24px;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:14px}
+
+.progress{margin-top:22px;display:grid;gap:20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 14px}
+.prog-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ring{width:72px;height:72px;flex:none}
+.ring circle{fill:none;stroke-width:7}
+.ring .bgc{stroke:var(--line)}
+.ring .fg{stroke:url(#ringGrad);stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.1,1);transform:rotate(-90deg);transform-origin:50% 50%}
+.prog-text{flex:1;min-width:160px}
+.prog-text strong{display:block;font-family:var(--font-display);font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.prog-text span{color:var(--muted);font-size:14px}
+.go-btn{appearance:none;border:0;border-radius:999px;padding:12px 18px;font:700 15px var(--font-body);background:var(--text);color:var(--bg);cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:transform .15s}
+.go-btn:hover{transform:translateY(-1px)}
+.metro{position:relative;display:grid;grid-template-columns:repeat(14,1fr)}
+.metro .track,.metro .fill{position:absolute;left:3.57%;right:3.57%;top:8px;height:4px;border-radius:4px}
+.metro .track{background:var(--line)}
+.metro .fill{background:linear-gradient(90deg,var(--m1) 0 25%,var(--m2) 25% 55%,var(--m3) 55% 85%,var(--m4) 85%);clip-path:inset(0 calc(100% - var(--p,0%)) 0 0 round 4px);transition:clip-path 1.1s cubic-bezier(.2,.7,.1,1)}
+.st{appearance:none;background:none;border:0;padding:0;display:grid;justify-items:center;gap:7px;color:var(--muted);font:700 11px var(--font-mono);cursor:pointer;position:relative;z-index:1}
+.st .dot{width:20px;height:20px;border-radius:50%;background:var(--bg);border:3px solid var(--line);transition:background .3s,border-color .3s,transform .2s}
+.st:hover .dot{transform:scale(1.15)}
+.st.part .dot{border-color:var(--c)}
+.st.done .dot{background:var(--c);border-color:var(--c)}
+.st.cur .dot{border-color:var(--c);animation:pulse 1.8s infinite}
+.st.active{color:var(--text)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--c) 70%,transparent)}100%{box-shadow:0 0 0 12px transparent}}
+.metro-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.metro-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+
+.start{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));margin-top:14px}
+.start > div{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px}
+.start h4{margin:0 0 8px;font:700 12px var(--font-mono);letter-spacing:.12em;text-transform:uppercase}
+.start ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.start .honest{grid-column:1/-1;color:var(--muted);font-size:15px}
+.start .honest b{color:var(--text)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);margin-top:26px}
+.nav .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.chip{flex:none;appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:600 14px var(--font-body);padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s,border-color .2s;display:inline-flex;align-items:center;gap:7px}
+.chip:hover{color:var(--text)}
+.chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+
+/* sections */
+section{padding-block:46px 6px;scroll-margin-top:64px}
+.sec-head{margin-bottom:16px}
+.kicker{font:700 12px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h2{font-family:var(--font-display);font-weight:800;font-size:clamp(30px,5.4vw,48px);letter-spacing:-.025em;line-height:1;margin:0;text-wrap:balance}
+.sub{color:var(--muted);max-width:60ch;margin:10px 0 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 4px}
+
+/* decks */
+.deck-wrap{margin:0 -20px}
+.deck{position:relative;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px calc((100% - var(--card-w)) / 2) 26px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.deck::-webkit-scrollbar{display:none}
+.card{--c:var(--m1);flex:none;width:var(--card-w);scroll-snap-align:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px 20px;position:relative;overflow:hidden;
+  transform:translateY(calc(var(--d,0) * 16px)) rotate(calc(var(--d,0) * var(--dir,0) * 2.5deg)) scale(calc(1 - var(--d,0) * .08));
+  opacity:calc(1 - var(--d,0) * .5);transition:transform .12s linear,opacity .12s linear,border-color .3s}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--c)}
+.card .glow{position:absolute;width:240px;height:240px;right:-90px;top:-110px;border-radius:50%;background:var(--c);opacity:.13;filter:blur(34px);pointer-events:none}
+.card.complete{border-color:color-mix(in srgb,var(--c) 60%,var(--line))}
+.badge{position:absolute;top:20px;right:18px;font:700 11px var(--font-mono);letter-spacing:.06em;padding:5px 10px;border-radius:999px;background:var(--c);color:#10181a;transform:scale(0);transition:transform .45s cubic-bezier(.3,1.7,.5,1)}
+.card.complete .badge{transform:scale(1)}
+.wk-top{display:flex;align-items:flex-end;gap:12px}
+.wk-num{font-family:var(--font-display);font-weight:800;font-size:68px;line-height:.78;color:var(--c);font-variant-numeric:tabular-nums;letter-spacing:-.05em}
+.wk-meta small{display:block;font:700 11px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.wk-meta span{font-size:13px;color:var(--muted)}
+.card h3{font-family:var(--font-display);font-weight:700;font-size:25px;line-height:1.08;letter-spacing:-.01em;margin:16px 0 12px;text-wrap:balance}
+.days{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.days label{display:grid;grid-template-columns:22px 40px 1fr;gap:10px;align-items:start;padding:9px 10px;border-radius:12px;background:var(--surface-2);cursor:pointer;transition:background .2s}
+.days label:hover{background:color-mix(in srgb,var(--c) 10%,var(--surface-2))}
+.days input{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:7px;border:2px solid #3a5158;margin:0;display:grid;place-items:center;transition:background .2s,border-color .2s,transform .2s;cursor:pointer}
+.days input:checked{background:var(--c);border-color:var(--c);transform:scale(1.06)}
+.days input:checked::after{content:"";width:10px;height:5px;border:2.5px solid #10181a;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.days .dn{font:700 12px var(--font-mono);color:var(--muted);padding-top:2px}
+.days .dt{font-size:14.5px;line-height:1.4;transition:color .2s}
+.days input:checked ~ .dt{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--c) 75%,transparent)}
+.deliv{margin-top:14px;padding:12px 14px;border:1.5px dashed color-mix(in srgb,var(--c) 55%,transparent);border-radius:14px;font-size:14.5px}
+.label{display:block;font:700 10.5px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:3px}
+.links{display:grid;gap:8px;margin-top:14px}
+.btn{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:600;font-size:14px;line-height:1.3;padding:11px 14px;border-radius:14px;color:var(--text);background:var(--surface-2);border:1px solid var(--line);transition:transform .15s,border-color .2s}
+.btn:hover{transform:translateY(-1px);border-color:var(--c)}
+.btn.main{background:var(--c);color:#10181a;border-color:transparent}
+.btn .t{flex:1;min-width:0}
+.btn .tag{display:block;font:700 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;opacity:.72;margin-bottom:2px}
+.btn svg{flex:none}
+.none{color:var(--muted);font-size:14px;margin:14px 0 0}
+.card.checkpoint{background:linear-gradient(165deg,color-mix(in srgb,var(--c) 24%,var(--surface)) 0%,var(--surface) 70%);display:flex;flex-direction:column;justify-content:center;gap:12px}
+.card.checkpoint .big{font-family:var(--font-display);font-weight:800;font-size:44px;line-height:.95;letter-spacing:-.03em;color:var(--c)}
+.card.checkpoint p{margin:0;font-size:17px}
+.deck-ctl{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dots{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.dots button{width:8px;height:8px;border-radius:99px;border:0;padding:0;background:var(--line);transition:width .3s,background .3s;cursor:pointer}
+.dots button.on{width:24px;background:var(--text)}
+.arrows{display:flex;gap:8px}
+.arrow{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);display:grid;place-items:center;cursor:pointer;transition:transform .15s,background .2s}
+.arrow:hover{background:var(--surface-2)}
+.arrow:active{transform:scale(.94)}
+.hint{font-size:13px;color:var(--muted);margin:6px 0 0}
+
+/* projects */
+.card.proj h3{font-size:28px;margin-top:12px}
+.pill{display:inline-block;font:700 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--c) 60%,transparent);color:var(--c)}
+.proj p{margin:0 0 12px;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.tags span{font-size:12.5px;padding:4px 10px;border-radius:8px;background:var(--surface-2);border:1px solid var(--line)}
+.proj ul{margin:0 0 14px;padding-left:18px;display:grid;gap:4px;font-size:14.5px}
+.proj .box{padding:12px 14px;border-radius:14px;background:var(--surface-2);font-size:14.5px;margin-top:8px}
+.readme{margin-top:6px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;font-size:15px}
+.readme code{font-family:var(--font-mono);font-size:13px;background:var(--surface-2);padding:2px 6px;border-radius:6px}
+
+/* routine */
+.bar{display:flex;height:18px;border-radius:99px;overflow:hidden;gap:3px;margin-top:6px}
+.bar span{background:var(--c);transition:filter .2s}
+.bar-legend{display:flex;justify-content:space-between;font:700 11px var(--font-mono);color:var(--muted);margin-top:6px}
+.blocks{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));margin-top:16px}
+.block{--c:var(--m1);background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;position:relative;overflow:hidden;transition:border-color .3s,opacity .3s}
+.block .min{font-family:var(--font-display);font-size:34px;font-weight:800;line-height:1;color:var(--c);font-variant-numeric:tabular-nums}
+.block h4{margin:4px 0 0;font-size:16px}
+.block p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.block .pbar{position:absolute;left:0;bottom:0;height:4px;background:var(--c);width:0}
+.block button{align-self:flex-start;appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font:700 13px var(--font-body);padding:8px 14px;border-radius:999px;cursor:pointer;margin-top:6px}
+.block.running{border-color:var(--c)}
+.block.running button{background:var(--c);color:#10181a;border-color:transparent}
+.block.finished .min{text-decoration:line-through;opacity:.6}
+.rules{display:grid;gap:8px;margin-top:16px;padding:0;list-style:none}
+.rules li{padding:12px 14px;border-left:3px solid var(--c);background:var(--surface);border-radius:0 12px 12px 0;font-size:15px}
+
+/* order */
+.steps{list-style:none;padding:0;margin:0;display:grid;counter-reset:s;max-width:720px}
+.steps li{--c:var(--m1);display:grid;grid-template-columns:50px 1fr;gap:14px;position:relative;padding-bottom:22px}
+.steps li::before{counter-increment:s;content:counter(s);width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font:800 21px var(--font-display);background:var(--surface);border:2px solid var(--c);color:var(--c)}
+.steps li::after{content:"";position:absolute;left:24px;top:54px;bottom:2px;width:2px;background:linear-gradient(var(--c),var(--line))}
+.steps li:last-child::after{display:none}
+.steps h4{margin:11px 0 4px;font-family:var(--font-display);font-size:20px;font-weight:700}
+.steps p{margin:0;color:var(--muted)}
+.why{max-width:720px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;font-size:15px}
+
+/* resources */
+.res{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));margin-top:14px}
+.res a{--c:var(--m3);display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:14px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--text);transition:transform .15s,border-color .2s;animation:pop .35s ease both}
+.res a:hover{border-color:var(--c);transform:translateY(-2px)}
+@keyframes pop{from{transform:translateY(6px);opacity:.3}to{transform:none;opacity:1}}
+.res .ty{font:700 10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:8px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c);min-width:64px;text-align:center}
+.res .nm{font-weight:600;line-height:1.3;font-size:15px}
+.res .nt{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:2px}
+.res .wkc{font:700 11px var(--font-mono);color:var(--muted);white-space:nowrap}
+
+/* setup */
+.setup{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}
+.sbox{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.sbox h4{margin:0 0 6px;font-size:16px;display:flex;gap:10px;align-items:center}
+.sbox h4 span{font:800 13px var(--font-mono);color:var(--bg);background:var(--m3);width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none}
+.sbox p{margin:0 0 6px;color:var(--muted);font-size:14.5px}
+.sbox p a{color:var(--text)}
+.code{position:relative;margin-top:8px}
+pre{margin:0;background:#071013;border:1px solid var(--line);border-radius:12px;padding:12px 70px 12px 14px;overflow-x:auto;font:13px/1.65 var(--font-mono);color:#d4e5df}
+.copy{position:absolute;top:7px;right:7px;appearance:none;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font:700 11px var(--font-mono);padding:6px 9px;border-radius:8px;cursor:pointer}
+.copy.ok{background:var(--m3);color:#10181a;border-color:transparent}
+.warn{border-color:color-mix(in srgb,var(--m2) 55%,var(--line))}
+.warn h4 span{background:var(--m2)}
+
+footer{padding:54px 0 70px;color:var(--muted);font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:22px}
+footer a{color:var(--text)}
+.reset{appearance:none;border:1px solid var(--line);background:none;color:var(--muted);font:600 13px var(--font-body);padding:8px 14px;border-radius:999px;cursor:pointer}
+.reset.arm{border-color:var(--m2);color:var(--m2)}
+
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .card{transform:none;opacity:1}
+}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<header class="wrap hero">
+  <div class="job"><b>$200k–350k</b> AI Engineer · Radley James · Remote (US)</div>
+  <h1><span class="ln"><span>14 hafte.</span></span><span class="ln"><span>Android se <em>AI Engineer</em>.</span></span></h1>
+  <p class="lead">Job ke saath chalne wala plan: 12 core hafte aur 2 hafte GCC add-on (CoorB jaisi Saudi banking roles ke liye). Weekdays 2.5 ghante, weekends 4–5 ghante. Har hafte ka ek deliverable hai, aur hafta tab mukammal hai jab wo GitHub par push ho jaye.</p>
+  <div class="stats">
+    <div class="stat"><strong>14</strong><span>hafte</span></div>
+    <div class="stat"><strong>4</strong><span>portfolio projects</span></div>
+    <div class="stat"><strong>2.5h</strong><span>roz</span></div>
+  </div>
+
+  <div class="progress" aria-label="Aapki progress">
+    <div class="prog-top">
+      <svg class="ring" viewBox="0 0 72 72" aria-hidden="true">
+        <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb547"/><stop offset=".5" stop-color="#ff6f91"/><stop offset=".8" stop-color="#3fd0c0"/><stop offset="1" stop-color="#8ea2ff"/></linearGradient></defs>
+        <circle class="bgc" cx="36" cy="36" r="30"/>
+        <circle class="fg" id="ringFg" cx="36" cy="36" r="30"/>
+      </svg>
+      <div class="prog-text"><strong id="progNum">0 / 0</strong><span id="progSub">din mukammal. Pehla din check karein, progress yahin dikhegi.</span></div>
+      <button class="go-btn" id="goCurrent" type="button">Is hafte par jayein
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="metro" id="metro"><div class="track"></div><div class="fill" id="metroFill"></div></div>
+    <div class="metro-legend"><span><i style="background:var(--m1)"></i>Month 1: Foundations</span><span><i style="background:var(--m2)"></i>Month 2: RAG, Agents, Evals</span><span><i style="background:var(--m3)"></i>Month 3: Production</span><span><i style="background:var(--m4)"></i>Week 13–14: GCC add-on</span></div>
+  </div>
+
+  <div class="start">
+    <div><h4 style="color:var(--m3)">Pehle se strong</h4><ul><li>Android/Kotlin engineering</li><li>Fintech domain (Easypaisa) aur regulated banking ka experience</li><li>ello chatbot par AI workflow ka hands-on kaam</li></ul></div>
+    <div><h4 style="color:var(--m2)">Gap jo bharna hai</h4><ul><li>Python backend (FastAPI)</li><li>RAG, vector DBs, agents, tool calling</li><li>LLM evals, Docker/cloud, observability, AI security</li><li>Fine-tuning, knowledge graphs, Kubernetes, Arabic NLP, SAMA/PDPL</li></ul></div>
+    <p class="honest"><b>Ek sach baat:</b> job 6+ saal maangti hai. Recruiters aksar strong, deployed portfolio dekh kar kam experience bhi accept kar lete hain, is liye neeche wale teen projects public aur live hon.</p>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap" id="navChips">
+    <button class="chip" type="button" data-target="hafte">Hafte</button>
+    <button class="chip" type="button" data-target="roz">Roz ka routine</button>
+    <button class="chip" type="button" data-target="tarteeb">Tarteeb</button>
+    <button class="chip" type="button" data-target="projects">Projects</button>
+    <button class="chip" type="button" data-target="resources">Resources</button>
+    <button class="chip" type="button" data-target="setup">Setup</button>
+  </div>
+</nav>
+
+<main>
+  <section id="hafte" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Week by week</p>
+      <h2>Swipe karein, din check karein</h2>
+      <p class="sub">Har card ek hafta hai: Mon–Fri ke kaam, weekend deliverable, aur us hafte ka main lecture. Checks isi browser mein save rehte hain.</p>
+    </div>
+    <div class="row" id="monthChips">
+      <button class="chip" type="button" data-month="1" style="--c:var(--m1)"><i></i>Month 1</button>
+      <button class="chip" type="button" data-month="2" style="--c:var(--m2)"><i></i>Month 2</button>
+      <button class="chip" type="button" data-month="3" style="--c:var(--m3)"><i></i>Month 3</button>
+      <button class="chip" type="button" data-month="4" style="--c:var(--m4)"><i></i>GCC add-on</button>
+    </div>
+    <div class="deck-wrap"><div class="deck" id="weekDeck" tabindex="0" aria-label="Weekly cards, left right swipe karein"></div></div>
+    <div class="deck-ctl">
+      <div class="dots" id="weekDots"></div>
+      <div class="arrows">
+        <button class="arrow" id="weekPrev" type="button" aria-label="Pichla card"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4 6 9l5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="arrow" id="weekNext" type="button" aria-label="Agla card"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="m7 4 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="roz" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Weekday · 150 minute</p>
+      <h2>Roz ka routine</h2>
+      <p class="sub">Har block par "Shuru" dabayein, timer chal parega. Weekend ka poora waqt deliverable banane par lagayein.</p>
+    </div>
+    <div class="bar" id="rBar" aria-hidden="true"></div>
+    <div class="bar-legend"><span>0</span><span>30</span><span>105</span><span>150 min</span></div>
+    <div class="blocks" id="rBlocks"></div>
+    <ul class="rules">
+      <li style="--c:var(--m1)"><b>Ek din, ek source.</b> 30 minute mein sirf us hafte ka main lecture. Chai aur Code, Udemy aur CodeWithHarry ek saath na kholein.</li>
+      <li style="--c:var(--m2)"><b>2 din ka rule.</b> Koi concept 2 din mein samajh na aaye to aage barhein, weekend par wapas aayein.</li>
+      <li style="--c:var(--m3)"><b>Sunday post.</b> Har Sunday LinkedIn par "is hafte kya banaya". Recruiters isi tarah aapko dhoondte hain.</li>
+    </ul>
+  </section>
+
+  <section id="tarteeb" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Har topic ka flow</p>
+      <h2>Seekhne ki tarteeb</h2>
+      <p class="sub">Udemy pehle, YouTube sirf jab atak jayein, GitHub repo apna version banane ke baad.</p>
+    </div>
+    <ol class="steps">
+      <li style="--c:var(--m1)"><div><h4>Udemy (main source)</h4><p>Us hafte ke course ka agla lecture dekhein. Saath saath VS Code mein code type karein; sirf dekhna kaafi nahi. Week 1 aur 4 mein YouTube hi main source hai.</p></div></li>
+      <li style="--c:var(--m2)"><div><h4>YouTube Hindi/Urdu (sirf zaroorat par)</h4><p>Concept samajh na aaye to wahi topic CampusX ya Krish Naik par dekhein, maslan "RAG chunking". Poori playlist start na karein.</p></div></li>
+      <li style="--c:var(--m3)"><div><h4>Apna version banayein</h4><p>Wahi cheez apne bank/fintech example par khud likhein. Udemy ka chatbot ki jagah "bank policy bot".</p></div></li>
+      <li style="--c:var(--text)"><div><h4>GitHub repo padhein (aakhir mein)</h4><p>Aapka version chal jaye, tab Resources wala repo khol kar compare karein. Ek achhi cheez apne code mein le aayein.</p></div></li>
+      <li style="--c:var(--muted)"><div><h4>Push karein</h4><p>Din ka kaam GitHub par commit, 5 line notes ke saath.</p></div></li>
+    </ol>
+    <p class="why"><b>Kyun ye tarteeb:</b> pehle repo padhne se code samajh aata hai magar khud likhna nahi aata. Pehle khud banane se interview mein aap apna har decision samjha sakenge.</p>
+  </section>
+
+  <section id="projects" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Assessment portfolio</p>
+      <h2>Chaar projects, ek bank theme</h2>
+      <p class="sub">Ye chaar projects Radley James aur CoorB dono jobs ki requirements cover karte hain.</p>
+    </div>
+    <div class="deck-wrap"><div class="deck" id="projDeck" tabindex="0" aria-label="Project cards"></div></div>
+    <div class="deck-ctl">
+      <div class="dots" id="projDots"></div>
+      <div class="arrows">
+        <button class="arrow" id="projPrev" type="button" aria-label="Pichla project"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M11 4 6 9l5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="arrow" id="projNext" type="button" aria-label="Agla project"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="m7 4 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+    </div>
+    <p class="readme"><b>Har README mein:</b> problem, architecture diagram, eval numbers, run karne ka tareeqa (<code>docker compose up</code>), aur wo trade-offs jo aapne choose kiye.</p>
+  </section>
+
+  <section id="resources" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Tap karein, seedha khulega</p>
+      <h2>Resources</h2>
+      <p class="sub">Week number se pata chalta hai kab kholna hai.</p>
+    </div>
+    <div class="row" id="resChips">
+      <button class="chip on" type="button" data-f="all">Sab</button>
+      <button class="chip" type="button" data-f="yt" style="--c:var(--m2)"><i></i>YouTube</button>
+      <button class="chip" type="button" data-f="udemy" style="--c:var(--m1)"><i></i>Udemy</button>
+      <button class="chip" type="button" data-f="gh" style="--c:var(--m3)"><i></i>GitHub</button>
+      <button class="chip" type="button" data-f="docs" style="--c:var(--text)"><i></i>Docs / English</button>
+    </div>
+    <div class="res" id="resList"></div>
+  </section>
+
+  <section id="setup" class="wrap">
+    <div class="sec-head">
+      <p class="kicker">Week 1 · Day 1 · ek baar</p>
+      <h2>VS Code + GitHub setup</h2>
+      <p class="sub">macOS ke zsh terminal mein chalayein. Har command ke saath Copy button hai.</p>
+    </div>
+    <div class="setup">
+      <div class="sbox"><h4><span>1</span>Tools install karein</h4>
+        <p><a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">VS Code</a> aur <a href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noopener noreferrer">Docker Desktop</a> download karein, phir:</p>
+        <div class="code"><pre>brew install python@3.12 uv git gh</pre><button class="copy" type="button">Copy</button></div></div>
+      <div class="sbox"><h4><span>2</span>VS Code extensions</h4>
+        <p>Extensions tab mein naam se search karein:</p>
+        <div class="tags"><span>Python</span><span>Pylance</span><span>Ruff</span><span>Jupyter</span><span>Docker</span><span>GitLens</span></div>
+        <p>Command Palette mein "Shell Command: Install 'code' command in PATH" bhi chala lein.</p></div>
+      <div class="sbox"><h4><span>3</span>GitHub login</h4>
+        <div class="code"><pre>gh auth login
+git config --global user.name "Aapka Naam"
+git config --global user.email "aap@example.com"</pre><button class="copy" type="button">Copy</button></div></div>
+      <div class="sbox"><h4><span>4</span>Do tarah ke repos</h4>
+        <p><b style="color:var(--text)">ai-engineer-journey</b>: learning repo, har hafte ka folder (week-01-python, week-02-fastapi …) aur har folder mein NOTES.md.</p>
+        <p><b style="color:var(--text)">3 project repos</b>: bank-policy-copilot, complaint-triage-agent, process-automation-advisor. Inhe profile par pin karein.</p></div>
+      <div class="sbox"><h4><span>5</span>Naya project shuru karein</h4>
+        <div class="code"><pre>uv init bank-policy-copilot
+cd bank-policy-copilot
+uv add fastapi openai
+code .</pre><button class="copy" type="button">Copy</button></div></div>
+      <div class="sbox warn"><h4><span>6</span>API keys kabhi push na karein</h4>
+        <p>Keys .env file mein rakhein aur .env ko .gitignore mein daalein. Bank wale interviewer leak hui key foran notice karte hain.</p>
+        <div class="code"><pre>echo ".env" &gt;&gt; .gitignore</pre><button class="copy" type="button">Copy</button></div></div>
+      <div class="sbox"><h4><span>7</span>Roz din ke aakhir mein</h4>
+        <div class="code"><pre>git add .
+git commit -m "week-03: structured output classifier with tests"
+git push</pre><button class="copy" type="button">Copy</button></div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Poora plan, tables ke saath: <a href="https://claude.ai/artifact/ChXopJQWaYTWigsKhurMnE" target="_blank" rel="noopener noreferrer">AI Engineer Roadmap doc</a></span>
+    <button class="reset" id="resetBtn" type="button">Progress saaf karein</button>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HEX = ['#ffb547','#ff6f91','#3fd0c0','#8ea2ff'];
+const MC = ['var(--m1)','var(--m2)','var(--m3)','var(--m4)'];
+
+const U = {
+  fastapi:{src:'Udemy',label:'FastAPI - The Complete Course (Eric Roby)',url:'https://www.udemy.com/course/fastapi-the-complete-course/'},
+  core:{src:'Udemy',label:'Ed Donner: AI Engineer Core Track',url:'https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models'},
+  agents:{src:'Udemy',label:'Production AI Agents with LangChain + LangGraph',url:'https://www.udemy.com/course/production-ai-agents/'},
+  evals:{src:'Udemy',label:'Production LLM Evaluation and Observability',url:'https://www.udemy.com/course/production-llm-evaluation-and-observability/'},
+  mlops:{src:'Udemy',label:'Ed Donner: AI Engineer MLOps Track',url:'https://www.udemy.com/course/generative-and-agentic-ai-in-production/'},
+  owasp:{src:'Udemy',label:'OWASP Top 10 for LLMs (Christopher Nett)',url:'https://www.udemy.com/course/owasp-top-10-for-llms/'}
+};
+const Y = {
+  harryPy:{src:'YouTube',label:'CodeWithHarry: Python in Hindi (one video). Timestamps se zaroori chapters, 1.5x',url:'https://www.youtube.com/watch?v=gfDE2a7MKjA'},
+  campusPy:{src:'YouTube',label:'CampusX: Python basics playlist',url:'https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4'},
+  karpathy:{src:'YouTube',label:'Karpathy: Intro to LLMs (1 ghanta, shuru mein ek baar)',url:'https://www.youtube.com/watch?v=zjkBMFhNj_g'},
+  campusLC:{src:'YouTube',label:'CampusX: Generative AI using LangChain playlist',url:'https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0'},
+  campusLG:{src:'YouTube',label:'CampusX: Agentic AI using LangGraph playlist',url:'https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL'},
+  harryDocker:{src:'YouTube',label:'CodeWithHarry: Docker Tutorial in Hindi (~90 min)',url:'https://www.youtube.com/results?search_query=codewithharry+docker+tutorial+hindi'},
+  krishDeploy:{src:'YouTube',label:'Krish Naik Hindi: deployment videos',url:'https://www.youtube.com/@krishnaikhindi/search?query=deployment'},
+  krishFT:{src:'YouTube',label:'Krish Naik: Fine-tuning, Quantization, LoRA, QLoRA',url:'https://www.youtube.com/watch?v=6S59Y0ckTm4'},
+  krishFTHindi:{src:'YouTube',label:'Krish Naik Hindi: fine-tuning videos',url:'https://www.youtube.com/@krishnaikhindi/search?query=fine%20tuning'},
+  k8sHindi:{src:'YouTube',label:'Kubernetes course in Hindi (search, pehli course video kholein)',url:'https://www.youtube.com/results?search_query=kubernetes+course+in+hindi'}
+};
+const D = {
+  fastapi:{src:'Docs',label:'FastAPI official tutorial',url:'https://fastapi.tiangolo.com/tutorial/'},
+  docker:{src:'Docs',label:'Docker official "Get started"',url:'https://docs.docker.com/get-started/'},
+  dlai:{src:'Course',label:'DeepLearning.AI short courses: "evaluation" search karein',url:'https://www.deeplearning.ai/short-courses/'},
+  langfuse:{src:'Docs',label:'Langfuse docs',url:'https://langfuse.com/docs'},
+  owasp:{src:'Docs',label:'OWASP Top 10 for LLM official list',url:'https://genai.owasp.org/llm-top-10/'},
+  peft:{src:'Docs',label:'Hugging Face PEFT docs',url:'https://huggingface.co/docs/peft'},
+  neo4j:{src:'Course',label:'Neo4j GraphAcademy: Neo4j & Generative AI Fundamentals (free)',url:'https://graphacademy.neo4j.com/courses/llm-fundamentals/'},
+  kg:{src:'Course',label:'GraphAcademy: Building Knowledge Graphs with LLMs',url:'https://graphacademy.neo4j.com/courses/llm-knowledge-graph-construction'},
+  sama:{src:'Docs',label:'SAMA Cyber Security Framework (official rulebook)',url:'https://rulebook.sama.gov.sa/en/entiresection/3850'},
+  pdpl:{src:'Docs',label:'Saudi PDPL overview (DLA Piper)',url:'https://www.dlapiperdataprotection.com/index.html?c=SA&t=law'}
+};
+
+const WEEKS = [
+ {t:'Python for Kotlin devs',days:['Syntax, types, venv/uv','Classes, dataclasses, typing','async/await (coroutines se compare karein)','Pydantic models','pytest basics'],del:'CLI tool jo JSON transactions parse kare, tests ke saath',main:Y.harryPy,backup:[Y.campusPy]},
+ {t:'FastAPI backend',days:['Routes, request/response','Pydantic validation','SQLite/Postgres + SQLAlchemy','Auth (API key / JWT)','Error handling, logging'],del:'CRUD "accounts" API, auth aur tests ke saath',main:U.fastapi,backup:[D.fastapi]},
+ {t:'LLM APIs + prompting',days:['Tokens, context window, temperature','OpenAI/Claude API calls, streaming','Structured output (JSON schema)','Function / tool calling','Few-shot, system prompts, cost tracking'],del:'FastAPI endpoint jo complaint text ko category + urgency JSON mein classify kare',main:U.core,also:Y.karpathy,backup:[Y.campusLC],note:'Core Track ke pehle 2 hafton ke sections'},
+ {t:'Docker + Git workflow',days:['Dockerfile, images','docker-compose (API + Postgres)','Env vars, secrets','GitHub Actions CI (lint + test)','README aur architecture diagram'],del:'Week 3 wali service Docker mein, CI green, clean README',main:Y.harryDocker,backup:[D.docker]},
+ {t:'Embeddings + vector DBs',days:['Embeddings, cosine similarity','Chunking strategies','pgvector ya Qdrant setup','Metadata filtering','PDF/DOCX ingestion pipeline'],del:'Bank policy PDFs ka searchable index',main:U.core,backup:[Y.campusLC],note:'Core Track ke RAG sections'},
+ {t:'Production RAG',days:['Basic RAG chain','Hybrid search (BM25 + vector)','Reranking','Citations + "mujhe nahi pata" handling','LangChain vs LlamaIndex vs plain code'],del:'Project 1 (Bank Policy Copilot) ka pehla version',main:U.core,backup:[Y.campusLC],note:'Core Track ke RAG sections'},
+ {t:'Agents + tool calling',days:['ReAct pattern','LangGraph: state, nodes, edges','Tools banana (DB lookup, API call)','Human-in-the-loop approval','MCP (Model Context Protocol) basics'],del:'Agent jo complaint padh kar account data check kare aur action suggest kare',main:U.agents,backup:[Y.campusLG]},
+ {t:'Evals + testing',days:['Golden dataset banana (50+ Q&A)','RAGAS: faithfulness, relevance','LLM-as-judge','DeepEval ko pytest/CI mein lagana','Prompt regression tests'],del:'Project 1 + 2 ke eval reports, README mein score table',main:U.evals,backup:[D.dlai],note:'Evaluation wala hissa'},
+ {t:'Cloud deployment',days:['AWS/GCP/Azure basics (ek choose karein)','Container deploy (ECS / Cloud Run)','Managed Postgres + secrets manager','Terraform basics','CI/CD se auto-deploy'],del:'Project 1 live URL par',main:U.mlops,backup:[Y.krishDeploy],note:'Deployment sections'},
+ {t:'Observability + reliability',days:['Langfuse ya Phoenix se tracing','Latency aur token cost dashboards','Retries, timeouts, fallback model','Caching (semantic cache)','Rate limiting, load test (Locust)'],del:'Traces + cost dashboard ka screenshot README mein',main:U.mlops,backup:[D.langfuse],note:'Langfuse/monitoring + Evaluation course ka observability hissa'},
+ {t:'AI security + compliance',days:['OWASP Top 10 for LLM apps','Prompt injection attacks aur defence','PII redaction (Presidio)','Guardrails (input/output filtering)','Audit logs, RBAC, data residency'],del:'Project 1 mein PII redaction + audit log + injection tests',main:U.owasp,backup:[D.owasp]},
+ {t:'Capstone + job prep',days:['Mon–Tue: Project 3 finish','Wed: system design ("bank ke liye LLM platform")','Thu: resume + LinkedIn update','Fri: 2 minute demo video'],dayNames:['Mon','Wed','Thu','Fri'],del:'Portfolio ready. Apply karein.',main:null,backup:[]},
+ {t:'Fine-tuning + multilingual',days:['Fine-tuning kab karni chahiye (RAG/prompting ke muqable), LoRA/QLoRA/PEFT concepts','Hugging Face transformers + datasets, bank FAQ dataset (English + Arabic)','Qwen ya Llama ko QLoRA se fine-tune (Colab GPU, Unsloth ya PEFT)','Base vs fine-tuned evaluation: accuracy, hallucination rate, latency','Multilingual embeddings (bge-m3), Project 1 ko Arabic/Urdu sawalon par test'],del:'Project 4: fine-tuned model Hugging Face Hub par + comparison report',main:U.core,also:Y.krishFT,backup:[Y.krishFTHindi,D.peft],note:'Core Track ka fine-tuning (LoRA/QLoRA) section'},
+ {t:'Knowledge graphs + Kubernetes + SAMA',days:['Graph basics, Neo4j, Cypher','GraphRAG: policy docs se entities aur relations nikal kar graph','Kubernetes basics: pods, deployments, services (minikube)','Project 1 ko Kubernetes par deploy (manifests, Helm basics)','SAMA Cyber Security Framework + Saudi PDPL, README mein "Compliance notes"'],del:'Project 1 mein GraphRAG mode + Kubernetes manifests + SAMA/PDPL compliance notes',main:D.neo4j,also:Y.k8sHindi,backup:[D.kg,D.sama,D.pdpl]}
+];
+const CHECK = {
+ 4:'Ek Dockerized FastAPI + LLM service GitHub par, tests aur CI ke saath.',
+ 8:'Do kaam karte projects, har ek ka eval score README mein. Interview ka sawal: "aapko kaise pata ke ye theek kaam karta hai?"',
+ 12:'Teen projects public, kam se kam ek live deployed, aur ek system design jo aap 30 minute mein whiteboard par samjha sakein. Radley James jaisi roles par apply shuru karein.',
+ 14:'CoorB ki mandatory list ka har point aapke GitHub par kisi project mein dikhe. Resume mein har requirement ke saamne us project ka link.'
+};
+const PROJECTS = [
+ {n:'Project 1',t:'Bank Policy Copilot',k:'RAG',w:'Week 5–11',d:'Employees bank ki policies (KYC, AML, account opening, charges) ke baare mein sawal poochein aur jawab citation ke saath milay.',stack:['FastAPI','Postgres + pgvector','Hybrid search + reranker','Claude/OpenAI','Docker'],must:['Har jawab ke saath source page','Jawab na mile to "nahi pata" kahe','Role-based access: teller aur compliance officer alag documents dekhein','Week 11: PII redaction, audit log, prompt injection test suite','Week 14: GraphRAG mode, Kubernetes deploy, SAMA/PDPL compliance notes'],proof:'RAGAS eval table README mein (faithfulness, answer relevancy), live URL, latency/cost dashboard',match:'Production RAG, regulated environment, security, deployment'},
+ {n:'Project 2',t:'Complaint Triage Agent',k:'LangGraph',w:'Week 7–8',d:'Complaint aaye to agent category nikale, account/transaction data tools se check kare, resolution draft kare, aur refund jaise risky action se pehle human approval maange.',stack:['LangGraph','Tool calling','Mock core-banking API (FastAPI)','Postgres','Langfuse'],must:['Human-in-the-loop approval step','Har tool call ka trace','Failure par retry/fallback'],proof:'50 test complaints par accuracy, aur kitne cases human tak gaye',match:'Workplace processes samajhna aur automation ke mauqe dhoondna: company ka core product'},
+ {n:'Capstone',t:'Process Automation Advisor',k:'Capstone',w:'Week 12',d:'Support tickets ya ops logs ka CSV upload karein. System repeat hone wale processes pehchane, har ek ka automation score de, aur top 3 ke liye agent workflow suggest kare.',stack:['Project 1 + 2 components','Kotlin + Compose (bonus)'],must:['Project 1 aur 2 ke components reuse karein: core architecture rakh kar customise karna','Bonus: chhota Android app jo Project 1 ka API streaming ke saath use kare. Mobile + AI combo aapko alag karega'],proof:'2 minute demo video, architecture diagram, system design note (scaling, multi-tenant, data isolation)',match:'Customer-specific AI capabilities, core product architecture ke saath'},
+ {n:'Project 4',t:'Fine-tuned Banking Assistant',k:'Fine-tuning',w:'Week 13',d:'Ek chhota open-source model (Qwen ya Llama) bank FAQs aur policy Q&A par fine-tune karein, English aur Arabic dono mein, aur base model ke saath compare karein.',stack:['Hugging Face transformers','PEFT / QLoRA','Unsloth','Colab GPU','Hugging Face Hub'],must:['Train/test split','Base vs fine-tuned table: accuracy, hallucination rate, latency','English aur Arabic dono ke test sawal'],proof:'Model card Hugging Face Hub par, eval notebook, aur README mein note ke fine-tuning kab RAG se behtar hai aur kab nahi',match:'CoorB: fine-tune LLMs (LoRA/QLoRA, PEFT) on domain-specific data aur base models se compare'}
+];
+const RES = [
+ {f:'yt',t:'CodeWithHarry: Python Tutorial in Hindi',n:'Ek lambi video, chapters ke saath',w:'W1',url:'https://www.youtube.com/watch?v=gfDE2a7MKjA'},
+ {f:'yt',t:'CodeWithHarry: Advanced Python (Part 2)',n:'Advanced chapters',w:'W1',url:'https://www.youtube.com/watch?v=61a7UkDO50s'},
+ {f:'yt',t:'CampusX: Python basics playlist',n:'Hindi, step by step',w:'W1',url:'https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4'},
+ {f:'yt',t:'Chai aur Code (Hitesh Choudhary)',n:'Channel',w:'W1–2',url:'https://www.youtube.com/@chaiaurcode'},
+ {f:'yt',t:'Karpathy: Intro to Large Language Models',n:'English, 1 ghanta',w:'W3',url:'https://www.youtube.com/watch?v=zjkBMFhNj_g'},
+ {f:'yt',t:'CampusX: Generative AI using LangChain',n:'Playlist',w:'W3, 5–6',url:'https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0'},
+ {f:'yt',t:'CodeWithHarry: Docker Tutorial in Hindi',n:'Search page, pehli video kholein',w:'W4',url:'https://www.youtube.com/results?search_query=codewithharry+docker+tutorial+hindi'},
+ {f:'yt',t:'CampusX: Agentic AI using LangGraph',n:'Playlist',w:'W7',url:'https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL'},
+ {f:'yt',t:'Krish Naik Hindi',n:'Channel',w:'W3, 5–9',url:'https://www.youtube.com/@krishnaikhindi'},
+ {f:'yt',t:'Complete GenAI Course 2026 (Hindi)',n:'LangChain, LangGraph, AWS Bedrock',w:'W3, 6–7',url:'https://www.youtube.com/playlist?list=PLUhY5ME1VdItcTMnzYakPdYJWorU6IdKk'},
+ {f:'udemy',t:'FastAPI - The Complete Course (Eric Roby)',n:'4.6 · ~21 ghante',w:'W2',url:U.fastapi.url},
+ {f:'udemy',t:'Ed Donner: AI Engineer Core Track',n:'4.7 · LLM APIs, RAG, fine-tuning, agents',w:'W3–6, 13',url:U.core.url},
+ {f:'udemy',t:'Production AI Agents with LangChain + LangGraph',n:'Bestseller · 4.5',w:'W7',url:U.agents.url},
+ {f:'udemy',t:'Production LLM Evaluation and Observability',n:'Evaluate, trace, monitor',w:'W8, 10',url:U.evals.url},
+ {f:'udemy',t:'Ed Donner: AI Engineer MLOps Track',n:'4.8 · AWS/GCP/Azure, Langfuse',w:'W9–10',url:U.mlops.url},
+ {f:'udemy',t:'OWASP Top 10 for LLMs (Christopher Nett)',n:'Prompt injection, data leakage',w:'W11',url:U.owasp.url},
+ {f:'docs',t:'FastAPI official tutorial',n:'Docs',w:'W2',url:D.fastapi.url},
+ {f:'docs',t:'Docker: Get started',n:'Docs',w:'W4',url:D.docker.url},
+ {f:'docs',t:'DeepLearning.AI short courses',n:'RAG, evals, agents · 1–2 ghante har course',w:'W5–8',url:D.dlai.url},
+ {f:'docs',t:'LangChain Academy: Intro to LangGraph',n:'Free course',w:'W7',url:'https://academy.langchain.com/'},
+ {f:'docs',t:'Hugging Face Agents Course',n:'Free course',w:'W7',url:'https://huggingface.co/learn/agents-course'},
+ {f:'docs',t:'Langfuse docs',n:'Tracing, cost tracking',w:'W10',url:D.langfuse.url},
+ {f:'docs',t:'OWASP Top 10 for LLM Applications',n:'Official list',w:'W11',url:D.owasp.url},
+ {f:'gh',t:'microsoft/generative-ai-for-beginners',n:'21 lessons: prompting, RAG, agents, security',w:'W3–5',url:'https://github.com/microsoft/generative-ai-for-beginners'},
+ {f:'gh',t:'mlabonne/llm-course',n:'LLM fundamentals se engineering tak',w:'W3, 5',url:'https://github.com/mlabonne/llm-course'},
+ {f:'gh',t:'openai/openai-cookbook',n:'API, structured output, tool calling',w:'W3',url:'https://github.com/openai/openai-cookbook'},
+ {f:'gh',t:'anthropics/anthropic-cookbook',n:'Claude: RAG, tool use, evals',w:'W3, 6–8',url:'https://github.com/anthropics/anthropic-cookbook'},
+ {f:'gh',t:'NirDiamant/RAG_Techniques',n:'30+ advanced RAG techniques',w:'W5–6',url:'https://github.com/NirDiamant/RAG_Techniques'},
+ {f:'gh',t:'NirDiamant/GenAI_Agents',n:'Agent patterns ke tutorials',w:'W7',url:'https://github.com/NirDiamant/GenAI_Agents'},
+ {f:'gh',t:'langchain-ai/langgraph',n:'Agents, human-in-the-loop examples',w:'W7',url:'https://github.com/langchain-ai/langgraph'},
+ {f:'gh',t:'Shubhamsaboo/awesome-llm-apps',n:'100+ chalne wali RAG/agent/MCP apps',w:'W6–7',url:'https://github.com/Shubhamsaboo/awesome-llm-apps'},
+ {f:'gh',t:'patchy631/ai-engineering-hub',n:'90+ AI engineering projects',w:'W6–10',url:'https://github.com/patchy631/ai-engineering-hub'},
+ {f:'gh',t:'DataTalksClub/llm-zoomcamp',n:'Free course: RAG, evaluation, monitoring',w:'W5–10',url:'https://github.com/DataTalksClub/llm-zoomcamp'},
+ {f:'gh',t:'explodinggradients/ragas',n:'RAG evaluation library',w:'W8',url:'https://github.com/explodinggradients/ragas'},
+ {f:'gh',t:'confident-ai/deepeval',n:'Pytest-style LLM tests',w:'W8',url:'https://github.com/confident-ai/deepeval'},
+ {f:'gh',t:'langfuse/langfuse',n:'Open-source LLM tracing',w:'W10',url:'https://github.com/langfuse/langfuse'},
+ {f:'gh',t:'microsoft/presidio',n:'PII detection aur redaction',w:'W11',url:'https://github.com/microsoft/presidio'},
+ {f:'gh',t:'NVIDIA/NeMo-Guardrails',n:'LLM apps ke liye guardrails',w:'W11',url:'https://github.com/NVIDIA/NeMo-Guardrails'},
+ {f:'gh',t:'krishnaik06/Data-Science-Gen-AI-Playlist-2024',n:'Krish Naik ki GenAI playlists ek jagah',w:'Ref',url:'https://github.com/krishnaik06/Data-Science-Gen-AI-Playlist-2024'},
+ {f:'yt',t:'Krish Naik: Fine-tuning, Quantization, LoRA, QLoRA',n:'Fine-tuning ki intuition',w:'W13',url:Y.krishFT.url},
+ {f:'yt',t:'Krish Naik Hindi: fine-tuning videos',n:'Search page',w:'W13',url:Y.krishFTHindi.url},
+ {f:'yt',t:'Kubernetes course in Hindi',n:'Search page, pehli course video kholein',w:'W14',url:Y.k8sHindi.url},
+ {f:'docs',t:'Hugging Face PEFT docs',n:'LoRA/QLoRA reference',w:'W13',url:D.peft.url},
+ {f:'docs',t:'Neo4j GraphAcademy: Neo4j & Generative AI Fundamentals',n:'Free course · GraphRAG',w:'W14',url:D.neo4j.url},
+ {f:'docs',t:'GraphAcademy: Building Knowledge Graphs with LLMs',n:'Free course',w:'W14',url:D.kg.url},
+ {f:'docs',t:'Kubernetes Basics tutorial',n:'Official docs',w:'W14',url:'https://kubernetes.io/docs/tutorials/kubernetes-basics/'},
+ {f:'docs',t:'SAMA Cyber Security Framework',n:'Official rulebook',w:'W14',url:D.sama.url},
+ {f:'docs',t:'Saudi PDPL overview',n:'DLA Piper summary',w:'W14',url:D.pdpl.url},
+ {f:'gh',t:'huggingface/peft',n:'LoRA/QLoRA ki official library',w:'W13',url:'https://github.com/huggingface/peft'},
+ {f:'gh',t:'unslothai/unsloth',n:'Free Colab GPU par tez QLoRA',w:'W13',url:'https://github.com/unslothai/unsloth'},
+ {f:'docs',t:'BAAI/bge-m3 (Hugging Face)',n:'Multilingual embeddings, Arabic samet',w:'W13',url:'https://huggingface.co/BAAI/bge-m3'},
+ {f:'gh',t:'microsoft/graphrag',n:'Microsoft ka GraphRAG implementation',w:'W14',url:'https://github.com/microsoft/graphrag'},
+ {f:'gh',t:'neo4j/neo4j-graphrag-python',n:'Neo4j ka GraphRAG Python package',w:'W14',url:'https://github.com/neo4j/neo4j-graphrag-python'}
+];
+const BLOCKS = [
+ {m:30,t:'Main lecture',d:'Us hafte ka main lecture (week card par link), 1.25x speed.',c:'var(--m1)'},
+ {m:75,t:'Khud code karein',d:'Video ka code copy na karein. Apne fintech example par likhein.',c:'var(--m2)'},
+ {m:20,t:'Commit + notes',d:'GitHub par push, aur 5 line notes: kya seekha, kya toota.',c:'var(--m3)'},
+ {m:15,t:'Repo padhein',d:'Resources wali list se ek GitHub repo ka code.',c:'#c9d8d2'},
+ {m:10,t:'Kal ka plan',d:'Kal kaunsa din aur kaunsa lecture, abhi likh lein.',c:'var(--muted)'}
+];
+
+/* storage */
+const KEY='aiRoadmap.v1';
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY));return v&&typeof v==='object'?v:{}}catch(e){return {}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+let state=load(); if(!state.days||typeof state.days!=='object') state.days={};
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ICON={
+ YouTube:'<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 7.5v7l5.5-3.5z" fill="currentColor"/></svg>',
+ Udemy:'<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M3 6.5 11 3l8 3.5-8 3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6.5 8.5v5c0 1.5 2 3 4.5 3s4.5-1.5 4.5-3v-5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+ Docs:'<svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M6 2.5h7l4 4v13H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 11h6M9 14.5h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+};
+ICON.Course=ICON.Docs;
+const ARROW='<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 10 10 4M5 4h5v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function linkBtn(l,tag,main){
+ return '<a class="btn'+(main?' main':'')+'" href="'+esc(l.url)+'" target="_blank" rel="noopener noreferrer">'+(ICON[l.src]||ICON.Docs)+'<span class="t"><span class="tag">'+esc(tag)+' · '+esc(l.src)+'</span>'+esc(l.label)+'</span>'+ARROW+'</a>';
+}
+
+/* week deck */
+const weekDeck=document.getElementById('weekDeck');
+const weekIndex={};
+let html='';
+WEEKS.forEach((w,i)=>{
+ const n=i+1, m=Math.ceil(n/4), names=w.dayNames||['Mon','Tue','Wed','Thu','Fri'];
+ let links='';
+ if(w.main){
+   links+=linkBtn(w.main,w.note?('Main · '+w.note):'Main lecture',true);
+   if(w.also) links+=linkBtn(w.also,'Saath mein',false);
+   w.backup.forEach(b=>{links+=linkBtn(b,'Agar samajh na aaye',false)});
+ }
+ html+='<article class="card week" data-week="'+n+'" style="--c:'+MC[m-1]+'">'+
+  '<div class="glow"></div><span class="badge">Mukammal</span>'+
+  '<div class="wk-top"><span class="wk-num">'+String(n).padStart(2,'0')+'</span><span class="wk-meta"><small>Week · '+(m===4?'GCC add-on':'Month '+m)+'</small><span id="wkCount'+n+'">0 / '+w.days.length+' din</span></span></div>'+
+  '<h3>'+esc(w.t)+'</h3><ul class="days">'+
+  w.days.map((d,j)=>'<li><label for="w'+n+'d'+j+'"><input type="checkbox" id="w'+n+'d'+j+'" data-week="'+n+'"><span class="dn">'+names[j]+'</span><span class="dt">'+esc(d)+'</span></label></li>').join('')+
+  '</ul><div class="deliv"><span class="label">Weekend deliverable</span>'+esc(w.del)+'</div>'+
+  (w.main?'<div class="links">'+links+'</div>':'<p class="none">Is hafte koi naya lecture nahi: capstone, system design aur resume.</p>')+
+  '</article>';
+ if(CHECK[n]){
+   html+='<article class="card checkpoint" data-check="'+m+'" style="--c:'+MC[m-1]+'"><div class="glow"></div><span class="label">Month '+m+' checkpoint</span><div class="big">'+(n===12?'Apply shuru karein.':n===14?'GCC ready.':'Rukein, check karein.')+'</div><p>'+esc(CHECK[n])+'</p></article>';
+ }
+});
+weekDeck.innerHTML=html;
+[...weekDeck.children].forEach((c,i)=>{if(c.dataset.week)weekIndex[c.dataset.week]=i});
+
+/* restore checks */
+weekDeck.querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.checked=!!state.days[cb.id]});
+
+/* metro */
+const metro=document.getElementById('metro');
+WEEKS.forEach((w,i)=>{
+ const n=i+1,m=Math.ceil(n/4);
+ const b=document.createElement('button');
+ b.type='button';b.className='st';b.style.setProperty('--c',MC[m-1]);b.dataset.week=n;
+ b.setAttribute('aria-label','Week '+n);
+ b.innerHTML='<span class="dot"></span><span>'+n+'</span>';
+ b.addEventListener('click',()=>{goWeek(n)});
+ metro.appendChild(b);
+});
+const stations=[...metro.querySelectorAll('.st')];
+
+function weekStats(n){
+ const boxes=weekDeck.querySelectorAll('input[data-week="'+n+'"]');
+ let d=0; boxes.forEach(b=>{if(b.checked)d++});
+ return {done:d,total:boxes.length};
+}
+function currentWeek(){
+ for(let n=1;n<=WEEKS.length;n++){const s=weekStats(n); if(s.done<s.total) return n;}
+ return WEEKS.length;
+}
+const ring=document.getElementById('ringFg'); const C=2*Math.PI*30;
+ring.style.strokeDasharray=C; ring.style.strokeDashoffset=C;
+function updateProgress(){
+ let done=0,total=0,allDone=true;
+ WEEKS.forEach((w,i)=>{
+  const n=i+1,s=weekStats(n); done+=s.done; total+=s.total;
+  const complete=s.done===s.total;
+  if(!complete) allDone=false;
+  const card=weekDeck.children[weekIndex[n]];
+  card.classList.toggle('complete',complete);
+  document.getElementById('wkCount'+n).textContent=s.done+' / '+s.total+' din';
+  const st=stations[i];
+  st.classList.toggle('done',complete);
+  st.classList.toggle('part',!complete&&s.done>0);
+ });
+ const cur=currentWeek();
+ stations.forEach((st,i)=>st.classList.toggle('cur',!allDone&&i===cur-1));
+ ring.style.strokeDashoffset=C*(1-(total?done/total:0));
+ document.getElementById('progNum').textContent=done+' / '+total;
+ document.getElementById('progSub').textContent= done===0 ? 'din mukammal. Pehla din check karein, progress yahin dikhegi.' : (allDone ? 'din mukammal. Poora roadmap khatam: ab apply karein.' : 'din mukammal · abhi Week '+cur+' chal raha hai');
+ const p = allDone?100:((cur-1)/(WEEKS.length-1))*100;
+ document.getElementById('metroFill').style.setProperty('--p',p.toFixed(2)+'%');
+}
+
+weekDeck.addEventListener('change',e=>{
+ const cb=e.target; if(!cb.matches('input[type=checkbox]'))return;
+ const n=+cb.dataset.week;
+ if(cb.checked) state.days[cb.id]=true; else delete state.days[cb.id];
+ save();
+ const after=weekStats(n);
+ updateProgress();
+ if(cb.checked&&after.done===after.total){
+   const r=weekDeck.children[weekIndex[n]].getBoundingClientRect();
+   burst(r.left+r.width/2,r.top+60,Math.ceil(n/4)-1);
+ }
+});
+
+/* deck behaviour */
+function makeDeck(deck,dotsEl,prev,next,onActive){
+ const cards=[...deck.children];
+ dotsEl.innerHTML=cards.map((c,i)=>'<button type="button" aria-label="Card '+(i+1)+'"></button>').join('');
+ const dots=[...dotsEl.children];
+ let active=-1,raf=0;
+ function update(){
+  raf=0;
+  const r=deck.getBoundingClientRect(),cx=r.left+r.width/2;
+  let best=0,bd=Infinity;
+  cards.forEach((c,i)=>{
+   const off=c.offsetLeft+c.offsetWidth/2-deck.scrollLeft-deck.clientWidth/2;
+   const d=Math.min(1,Math.abs(off)/(c.offsetWidth+16));
+   if(!reduce){c.style.setProperty('--d',d.toFixed(3));c.style.setProperty('--dir',off>0?1:-1);}
+   if(Math.abs(off)<bd){bd=Math.abs(off);best=i}
+  });
+  if(best!==active){active=best;dots.forEach((d,i)=>d.classList.toggle('on',i===best));if(onActive)onActive(cards[best],best)}
+ }
+ const ask=()=>{if(!raf)raf=requestAnimationFrame(update)};
+ deck.addEventListener('scroll',ask,{passive:true});
+ window.addEventListener('resize',ask);
+ function go(i,smooth){
+  i=Math.max(0,Math.min(cards.length-1,i));
+  const c=cards[i];
+  deck.scrollTo({left:c.offsetLeft-(deck.clientWidth-c.offsetWidth)/2,behavior:(smooth===false||reduce)?'auto':'smooth'});
+ }
+ dots.forEach((d,i)=>d.addEventListener('click',()=>go(i)));
+ prev.addEventListener('click',()=>go(active-1));
+ next.addEventListener('click',()=>go(active+1));
+ deck.addEventListener('keydown',e=>{
+  if(e.target!==deck)return;
+  if(e.key==='ArrowRight'){e.preventDefault();go(active+1)}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(active-1)}
+ });
+ update();
+ return {go};
+}
+const monthChips=[...document.querySelectorAll('#monthChips .chip')];
+const wd=makeDeck(weekDeck,document.getElementById('weekDots'),document.getElementById('weekPrev'),document.getElementById('weekNext'),(card)=>{
+ const n=+(card.dataset.week||0);
+ const m=card.dataset.check?+card.dataset.check:Math.ceil(n/4);
+ monthChips.forEach(c=>c.classList.toggle('on',+c.dataset.month===m));
+ stations.forEach(s=>s.classList.toggle('active',+s.dataset.week===n));
+});
+monthChips.forEach(c=>c.addEventListener('click',()=>wd.go(weekIndex[(+c.dataset.month-1)*4+1])));
+
+function goWeek(n){
+ document.getElementById('hafte').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+ setTimeout(()=>wd.go(weekIndex[n]),reduce?0:350);
+}
+document.getElementById('goCurrent').addEventListener('click',()=>goWeek(currentWeek()));
+
+/* projects */
+const projDeck=document.getElementById('projDeck');
+projDeck.innerHTML=PROJECTS.map((p,i)=>'<article class="card proj" style="--c:'+MC[i]+'"><div class="glow"></div>'+
+ '<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill">'+esc(p.n)+' · '+esc(p.k)+'</span><span class="pill">'+esc(p.w)+'</span></div>'+
+ '<h3>'+esc(p.t)+'</h3><p>'+esc(p.d)+'</p>'+
+ '<span class="label">Stack</span><div class="tags">'+p.stack.map(s=>'<span>'+esc(s)+'</span>').join('')+'</div>'+
+ '<span class="label">Must-have</span><ul>'+p.must.map(s=>'<li>'+esc(s)+'</li>').join('')+'</ul>'+
+ '<div class="box"><span class="label">Proof</span>'+esc(p.proof)+'</div>'+
+ '<div class="box"><span class="label">Job se match</span>'+esc(p.match)+'</div></article>').join('');
+makeDeck(projDeck,document.getElementById('projDots'),document.getElementById('projPrev'),document.getElementById('projNext'));
+
+/* resources */
+const resList=document.getElementById('resList');
+const TY={yt:['YouTube','var(--m2)'],udemy:['Udemy','var(--m1)'],gh:['GitHub','var(--m3)'],docs:['Docs','var(--text)']};
+function renderRes(f){
+ resList.innerHTML=RES.filter(r=>f==='all'||r.f===f).map((r,i)=>'<a href="'+esc(r.url)+'" target="_blank" rel="noopener noreferrer" style="--c:'+TY[r.f][1]+';animation-delay:'+(reduce?0:Math.min(i,14)*25)+'ms"><span class="ty">'+TY[r.f][0]+'</span><span class="nm">'+esc(r.t)+'<span class="nt">'+esc(r.n)+'</span></span><span class="wkc">'+esc(r.w)+'</span></a>').join('');
+}
+renderRes('all');
+const resChips=[...document.querySelectorAll('#resChips .chip')];
+resChips.forEach(c=>c.addEventListener('click',()=>{resChips.forEach(x=>x.classList.toggle('on',x===c));renderRes(c.dataset.f)}));
+
+/* routine */
+const rBar=document.getElementById('rBar'), rBlocks=document.getElementById('rBlocks');
+rBar.innerHTML=BLOCKS.map(b=>'<span style="--c:'+b.c+';flex:'+b.m+'"></span>').join('');
+rBlocks.innerHTML=BLOCKS.map((b,i)=>'<div class="block" style="--c:'+b.c+'" data-i="'+i+'"><span class="min" id="rMin'+i+'">'+b.m+' min</span><h4>'+esc(b.t)+'</h4><p>'+esc(b.d)+'</p><button type="button" id="rBtn'+i+'">Shuru</button><span class="pbar" id="rBar'+i+'"></span></div>').join('');
+let timer={i:-1,end:0,left:0,iv:0};
+const fmt=s=>{s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')};
+function tick(){
+ const i=timer.i,b=BLOCKS[i],left=(timer.end-Date.now())/1000;
+ document.getElementById('rMin'+i).textContent=fmt(left);
+ document.getElementById('rBar'+i).style.width=(100*(1-left/(b.m*60)))+'%';
+ if(left<=0){
+  clearInterval(timer.iv);
+  const el=rBlocks.children[i]; el.classList.remove('running'); el.classList.add('finished');
+  document.getElementById('rMin'+i).textContent=b.m+' min';
+  document.getElementById('rBtn'+i).textContent='Phir se';
+  timer={i:-1,end:0,left:0,iv:0};
+  const nx=rBlocks.children[i+1]; if(nx) nx.querySelector('button').focus({preventScroll:true});
+ }
+}
+rBlocks.addEventListener('click',e=>{
+ const btn=e.target.closest('button'); if(!btn)return;
+ const i=+btn.parentElement.dataset.i, el=btn.parentElement;
+ if(timer.i===i){ // pause
+  clearInterval(timer.iv); timer.left=(timer.end-Date.now())/1000; el.classList.remove('running'); btn.textContent='Jaari rakhein'; timer.i=-1; timer.paused=i; return;
+ }
+ if(timer.i>=0){ // stop other
+  clearInterval(timer.iv); const o=rBlocks.children[timer.i]; o.classList.remove('running'); document.getElementById('rBtn'+timer.i).textContent='Shuru';
+ }
+ const resume = timer.paused===i && timer.left>0;
+ const secs = resume ? timer.left : BLOCKS[i].m*60;
+ el.classList.remove('finished'); el.classList.add('running');
+ timer={i:i,end:Date.now()+secs*1000,left:0,iv:setInterval(tick,500)};
+ btn.textContent='Rokein'; tick();
+});
+
+/* copy */
+document.querySelectorAll('.copy').forEach(b=>b.addEventListener('click',async()=>{
+ const txt=b.previousElementSibling.textContent;
+ try{await navigator.clipboard.writeText(txt);b.textContent='Copied';b.classList.add('ok')}
+ catch(e){b.textContent='Select karein';const r=document.createRange();r.selectNodeContents(b.previousElementSibling);const s=getSelection();s.removeAllRanges();s.addRange(r)}
+ setTimeout(()=>{b.textContent='Copy';b.classList.remove('ok')},1800);
+}));
+
+/* nav */
+const navChips=[...document.querySelectorAll('#navChips .chip')];
+navChips.forEach(c=>c.addEventListener('click',()=>document.getElementById(c.dataset.target).scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})));
+if('IntersectionObserver' in window){
+ const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){navChips.forEach(c=>c.classList.toggle('on',c.dataset.target===en.target.id));const on=navChips.find(c=>c.dataset.target===en.target.id);if(on&&on.scrollIntoView)on.parentElement.scrollTo({left:on.offsetLeft-20,behavior:'smooth'})}})},{rootMargin:'-35% 0px -60% 0px'});
+ document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+
+/* reset */
+const resetBtn=document.getElementById('resetBtn'); let armT=0;
+resetBtn.addEventListener('click',()=>{
+ if(!resetBtn.classList.contains('arm')){resetBtn.classList.add('arm');resetBtn.textContent='Pakka? Dobara tap karein';armT=setTimeout(()=>{resetBtn.classList.remove('arm');resetBtn.textContent='Progress saaf karein'},3000);return}
+ clearTimeout(armT); state={days:{}}; save();
+ weekDeck.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.checked=false);
+ updateProgress(); resetBtn.classList.remove('arm'); resetBtn.textContent='Saaf ho gaya';
+ setTimeout(()=>resetBtn.textContent='Progress saaf karein',1800);
+});
+
+/* confetti */
+const cv=document.getElementById('confetti'),cx=cv.getContext('2d');let parts=[],anim=0;
+function size(){const r=window.devicePixelRatio||1;cv.width=innerWidth*r;cv.height=innerHeight*r;cx.setTransform(r,0,0,r,0,0)}
+function burst(x,y,mi){
+ if(reduce)return; size();
+ for(let i=0;i<110;i++){const a=Math.random()*Math.PI*2,v=3+Math.random()*7;parts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-5,s:5+Math.random()*6,c:i%3===0?HEX[mi]:HEX[i%3],r:Math.random()*6,vr:(Math.random()-.5)*.35,life:80+Math.random()*50})}
+ if(!anim)anim=requestAnimationFrame(loop);
+}
+function loop(){
+ cx.clearRect(0,0,innerWidth,innerHeight);
+ parts=parts.filter(p=>--p.life>0);
+ parts.forEach(p=>{p.vy+=.22;p.vx*=.985;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.globalAlpha=Math.min(1,p.life/30);cx.fillStyle=p.c;cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore()});
+ anim=parts.length?requestAnimationFrame(loop):0;
+}
+
+/* first paint */
+updateProgress();
+requestAnimationFrame(()=>{wd.go(weekIndex[currentWeek()],false)});
+})();
+</script>
+</body>
+</html>
